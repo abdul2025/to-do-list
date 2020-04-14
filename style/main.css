@@ -2,7 +2,7 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	border: 1px solid red;
+	/* border: 1px solid red; */
 }
 body,
 html {
@@ -55,7 +55,7 @@ body {
 	display: grid;
 	justify-content: start;
 	align-content: center;
-	padding: 70px;
+	padding: 50px;
 }
 
 .inputs {
@@ -90,11 +90,11 @@ button {
 
 #list-container {
 	width: 100%;
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255, 255, 255, 0.2);
 	padding: 3px;
 	margin-top: 1%;
 	height: 500px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 .info {
@@ -126,10 +126,11 @@ button {
 	justify-content: center;
 	align-content: center;
 	gap: 20px;
-	color: black;
+	color: #f7f7f7;
 }
 .incomingValue {
 	font-size: 1.1vmax;
+	font-family: 'PT Serif', serif;
 }
 
 .checkbox {
@@ -145,7 +146,7 @@ button {
 	text-decoration: line-through lightgrey;
 }
 .checked-list {
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.8);
 }
 
 @media only screen and (max-width: 1060px) {

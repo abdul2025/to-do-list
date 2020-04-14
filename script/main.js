@@ -64,7 +64,6 @@ function deleteTasks(event) {
 			objDOMs.listContainer.removeChild(event.target.parentNode.parentNode);
 		} else {
 			// need improvment
-
 			event.target.parentNode.classList.toggle('shake');
 			console.log(event.target.parentNode);
 		}
