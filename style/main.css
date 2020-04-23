@@ -42,10 +42,8 @@ body {
 }
 .welcome h3 {
 	background-color: rgba(0, 0, 0, 0.3);
-	padding: 20px;
 	color: black;
 	color: lightgrey;
-	font-size: 20px;
 	text-align: center;
 }
 
@@ -55,7 +53,7 @@ body {
 	display: grid;
 	justify-content: start;
 	align-content: center;
-	padding: 50px;
+	gap: 2px;
 }
 
 .inputs {
@@ -92,7 +90,7 @@ button {
 	width: 100%;
 	background-color: rgba(255, 255, 255, 0.2);
 	padding: 3px;
-	margin-top: 1%;
+
 	height: 500px;
 	overflow: auto;
 }
@@ -238,4 +236,15 @@ button {
 	100% {
 		transform: translate(1px, -2px) rotate(-1deg);
 	}
+}
+
+#clear {
+	background-color: #d1d1d1;
+	transition: background-color 2s;
+}
+#clear:hover {
+	background-color: rgb(29, 26, 26);
+	color: white;
+	cursor: pointer;
+	transform: all 0.2s;
 }

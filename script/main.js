@@ -6,7 +6,9 @@ const objDOMs = {
 	listContainer: document.getElementById('list-container'),
 	dataInCircle: document.getElementById('data-in-circle'),
 	TimeInCircle: document.querySelector('.time-in-circle'),
+	clearBtn: document.getElementById('clear'),
 };
+console.log(objDOMs.clearBtn);
 
 const status = {
 	state: false,
@@ -15,6 +17,14 @@ const status = {
 
 displayTask();
 
+/// clear localStorage and UI
+objDOMs.clearBtn.addEventListener('click', () => {
+	console.log('Storage is empty and UI too');
+	localStorage.clear();
+	objDOMs.listContainer.innerHTML = '';
+});
+
+// save tasks to localStorage
 function saveTasks(container) {
 	let tasks = Array.from(container.childNodes).reverse();
 	let list = [];
@@ -23,11 +33,12 @@ function saveTasks(container) {
 	});
 	localStorage.setItem('listOfTasks', JSON.stringify(list));
 }
-// localStorage.clear();
 
+// display Tasks from localstorage into UI
 function displayTask() {
 	let savedTasks;
 	savedTasks = JSON.parse(localStorage.getItem('listOfTasks'));
+	// console.log(savedTasks);
 	if (savedTasks !== null) {
 		// console.log(savedTasks);
 		savedTasks.forEach((el) => {
@@ -35,8 +46,11 @@ function displayTask() {
 			objDOMs.listContainer.insertAdjacentHTML('afterbegin', el);
 		});
 	}
+
+	console.log('store is ept');
 }
 
+// tasks tamplate
 function template() {
 	if (objDOMs.input.value.length < 1) return;
 	let html = `<div class="list-${status.id}">
@@ -58,6 +72,7 @@ function template() {
 	objDOMs.input.focus();
 }
 
+// create new task
 function createTasks(e) {
 	if (e.keyCode === 13 || e.type === 'click') {
 		template();
@@ -65,6 +80,7 @@ function createTasks(e) {
 	}
 }
 
+// check the status of the task
 function checkedTasked(event) {
 	if (event.target.className === 'checkbox') {
 		//access the second parent and change the  checked status of it
@@ -83,6 +99,7 @@ function checkedTasked(event) {
 	}
 }
 
+//delete a task and update the localStorage
 function deleteTasks(event) {
 	if (event.target.className === 'delBtn') {
 		//check if the status of checkedbox is true
@@ -96,15 +113,17 @@ function deleteTasks(event) {
 		}
 	}
 }
-
+/// events
 objDOMs.addBtn.addEventListener('click', createTasks);
 objDOMs.input.addEventListener('keydown', createTasks);
 objDOMs.listContainer.addEventListener('click', checkedTasked);
 objDOMs.listContainer.addEventListener('click', deleteTasks);
+
 ////////////////////////////////////////////////////////////////
 
 //////////////////////////////
 
+//// Time for UI and create a time for tasks
 setInterval(function () {
 	objDOMs.dataInCircle.textContent = date('date');
 	objDOMs.TimeInCircle.textContent = date('timer');
@@ -174,4 +193,3 @@ function date(where) {
 		return `${time()}`;
 	}
 }
-console.log(date('timer'));
