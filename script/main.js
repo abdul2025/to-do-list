@@ -13,29 +13,55 @@ const status = {
 	id: 0,
 };
 
-console.log(objDOMs.TimeInCircle);
-// console.log(localStorage.setItem('time', objDOMs.TimeInCircle.innerHTML));
+displayTask();
+
+function saveTasks(container) {
+	let tasks = Array.from(container.childNodes).reverse();
+	let list = [];
+	tasks.forEach((element, index) => {
+		list.push(tasks[index].outerHTML);
+	});
+	localStorage.setItem('listOfTasks', JSON.stringify(list));
+}
+// localStorage.clear();
+
+function displayTask() {
+	let savedTasks;
+	savedTasks = JSON.parse(localStorage.getItem('listOfTasks'));
+	if (savedTasks !== null) {
+		// console.log(savedTasks);
+		savedTasks.forEach((el) => {
+			// console.log(el);
+			objDOMs.listContainer.insertAdjacentHTML('afterbegin', el);
+		});
+	}
+}
+
+function template() {
+	if (objDOMs.input.value.length < 1) return;
+	let html = `<div class="list-${status.id}">
+	<div class="info" status="${status.state}">
+		<div class="info-input">
+			<input class="checkbox"  type="checkbox" />
+			<h3 class="incomingValue">${objDOMs.input.value}</h3>
+			<div class="time">
+				<i class="fas fa-clock"> ${date('list')}</i>
+			</div>
+		</div>
+		<button class="delBtn"><i class="fas fa-trash del"></i></button>
+	</div>  
+</div>`;
+
+	objDOMs.listContainer.insertAdjacentHTML('afterbegin', html);
+	status.id += 1;
+	objDOMs.input.value = '';
+	objDOMs.input.focus();
+}
 
 function createTasks(e) {
-	// // console.log(e.keyCode);
-	// console.log(e.type);
 	if (e.keyCode === 13 || e.type === 'click') {
-		let html = `<div class="list-${status.id}">
-		<div class="info" status="${status.state}">
-			<div class="info-input">
-				<input class="checkbox"  type="checkbox" />
-				<h3 class="incomingValue">${objDOMs.input.value}</h3>
-				<div class="time">
-					<i class="fas fa-clock"> ${date('list')}</i>
-				</div>
-			</div>
-			<button class="delBtn"><i class="fas fa-trash del"></i></button>
-		</div>  
-	</div>`;
-		objDOMs.listContainer.insertAdjacentHTML('afterbegin', html);
-		status.id += 1;
-		objDOMs.input.value = ' ';
-		objDOMs.input.focus();
+		template();
+		saveTasks(objDOMs.listContainer);
 	}
 }
 
@@ -61,11 +87,12 @@ function deleteTasks(event) {
 	if (event.target.className === 'delBtn') {
 		//check if the status of checkedbox is true
 		if (event.target.parentNode.getAttribute('status') === 'true') {
+			// console.log(event.target.parentNode.parentNode.className);
 			objDOMs.listContainer.removeChild(event.target.parentNode.parentNode);
+			saveTasks(objDOMs.listContainer);
 		} else {
 			// need improvment
 			event.target.parentNode.classList.toggle('shake');
-			console.log(event.target.parentNode);
 		}
 	}
 }
@@ -75,6 +102,8 @@ objDOMs.input.addEventListener('keydown', createTasks);
 objDOMs.listContainer.addEventListener('click', checkedTasked);
 objDOMs.listContainer.addEventListener('click', deleteTasks);
 ////////////////////////////////////////////////////////////////
+
+//////////////////////////////
 
 setInterval(function () {
 	objDOMs.dataInCircle.textContent = date('date');
@@ -127,9 +156,9 @@ function date(where) {
 
 	let time = () => {
 		if (hours < 12) {
-			return `${hours}:${min}:${sec} AM`;
-		} else {
 			return `${hours}:${min}:${sec} PM`;
+		} else {
+			return `${hours}:${min}:${sec} AM`;
 		}
 	};
 
@@ -146,5 +175,3 @@ function date(where) {
 	}
 }
 console.log(date('timer'));
-
-function scrollDown() {}
