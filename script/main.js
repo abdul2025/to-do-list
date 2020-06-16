@@ -1,5 +1,3 @@
-console.log('running');
-
 const objDOMs = {
 	input: document.getElementById('input'),
 	addBtn: document.getElementById('add-btn'),
@@ -101,6 +99,7 @@ function checkedTasked(event) {
 
 //delete a task and update the localStorage
 function deleteTasks(event) {
+	// console.log(this);
 	if (event.target.className === 'delBtn') {
 		//check if the status of checkedbox is true
 		if (event.target.parentNode.getAttribute('status') === 'true') {
@@ -169,15 +168,15 @@ function date(where) {
 	let monthToString = () => {
 		return months[month];
 	};
-	hours = ((hours + 11) % 12) + 1;
+
 	min = min < 10 ? `0${min}` : min;
 	sec = sec < 10 ? `0${sec}` : sec;
 
 	let time = () => {
 		if (hours < 12) {
-			return `${hours}:${min}:${sec} PM`;
+			return `${((hours + 11) % 12) + 1}:${min}:${sec} AM`;
 		} else {
-			return `${hours}:${min}:${sec} AM`;
+			return `${((hours + 11) % 12) + 1}:${min}:${sec} PM`;
 		}
 	};
 
